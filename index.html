@@ -3,20 +3,21 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>MoonBot V5</title>
+<title>MoonBot V5 Ultimate</title>
 
 <style>
 :root{
-  --bg:#070b14;
-  --panel:#0d1322;
-  --panel2:#111a2d;
-  --text:#eef4ff;
+  --bg:#060912;
+  --panel:#0b1220;
+  --panel2:#101a2d;
+  --card:#111b2e;
+  --border:#1e2b44;
+  --text:#f1f5ff;
   --muted:#91a0b8;
-  --accent:#6c8cff;
-  --accent2:#8f6cff;
-  --border:#1d2940;
-  --user:#263a73;
-  --bot:#121c30;
+  --accent:#6d8cff;
+  --accent2:#9b6dff;
+  --user:#263c7a;
+  --success:#43e68c;
 }
 
 *{
@@ -25,14 +26,19 @@
 
 body{
   margin:0;
-  font-family:Arial,Helvetica,sans-serif;
-  background:var(--bg);
-  color:var(--text);
   height:100vh;
   overflow:hidden;
+  font-family:Arial,Helvetica,sans-serif;
+  background:
+    radial-gradient(circle at 80% 10%,rgba(91,107,255,.12),transparent 30%),
+    radial-gradient(circle at 10% 90%,rgba(155,109,255,.08),transparent 30%),
+    var(--bg);
+  color:var(--text);
 }
 
-button,input,textarea,select{
+button,
+textarea,
+select{
   font:inherit;
 }
 
@@ -41,15 +47,15 @@ button{
 }
 
 .app{
-  display:flex;
   height:100vh;
+  display:flex;
 }
 
 /* SIDEBAR */
 
 .sidebar{
-  width:270px;
-  background:var(--panel);
+  width:275px;
+  background:rgba(11,18,32,.96);
   border-right:1px solid var(--border);
   padding:18px;
   display:flex;
@@ -59,49 +65,56 @@ button{
 .logo{
   display:flex;
   align-items:center;
-  gap:10px;
-  font-size:22px;
-  font-weight:bold;
-  margin-bottom:22px;
+  gap:11px;
+  margin-bottom:20px;
 }
 
 .logoIcon{
-  width:38px;
-  height:38px;
+  width:42px;
+  height:42px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
+  font-size:23px;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  box-shadow:0 0 25px rgba(108,140,255,.4);
+  box-shadow:0 0 28px rgba(109,140,255,.45);
 }
 
-.version{
-  font-size:11px;
-  color:#b6c2ff;
-  background:#17213b;
-  padding:4px 7px;
-  border-radius:8px;
+.logoName{
+  font-size:21px;
+  font-weight:bold;
+}
+
+.badge{
+  display:inline-block;
+  margin-left:5px;
+  font-size:10px;
+  padding:3px 6px;
+  border-radius:7px;
+  background:#1c2950;
+  color:#aebcff;
 }
 
 .newChat{
-  width:100%;
-  border:1px solid var(--border);
-  background:linear-gradient(135deg,#18254a,#202d5b);
-  color:white;
-  padding:12px;
+  border:0;
   border-radius:12px;
-  margin-bottom:15px;
+  padding:12px;
+  color:white;
+  background:linear-gradient(135deg,#536fd6,#8158d8);
+  font-weight:bold;
+  margin-bottom:17px;
 }
 
 .newChat:hover{
-  filter:brightness(1.15);
+  filter:brightness(1.12);
 }
 
-.sideTitle{
-  font-size:12px;
-  color:var(--muted);
-  margin:10px 0;
+.sectionTitle{
+  color:#6e7d98;
+  font-size:10px;
+  letter-spacing:1px;
+  margin:8px 0;
 }
 
 .history{
@@ -112,46 +125,47 @@ button{
 .historyItem{
   padding:10px;
   border-radius:9px;
-  color:#c7d0e2;
-  font-size:13px;
-  margin-bottom:5px;
+  margin-bottom:4px;
+  font-size:12px;
+  color:#b8c3d8;
   cursor:pointer;
 }
 
 .historyItem:hover{
-  background:#151f34;
+  background:#141f33;
 }
 
-.sideButtons{
+.sideActions{
   display:flex;
   flex-direction:column;
-  gap:8px;
+  gap:7px;
 }
 
-.sideBtn{
-  background:#111a2b;
-  border:1px solid var(--border);
+.sideButton{
+  background:#0f192a;
   color:#cbd5e8;
+  border:1px solid var(--border);
   padding:10px;
   border-radius:9px;
   text-align:left;
 }
 
-.sideBtn:hover{
-  background:#18243b;
+.sideButton:hover{
+  background:#17243a;
 }
 
-.creator{
-  margin-top:14px;
-  padding:12px;
+.creatorCard{
+  margin-top:13px;
   border:1px solid var(--border);
   border-radius:12px;
-  background:#0a101d;
-  font-size:12px;
+  padding:11px;
+  background:#080e1a;
   color:var(--muted);
+  font-size:11px;
+  line-height:1.6;
 }
 
-.creator strong{
+.creatorCard strong{
   color:white;
 }
 
@@ -159,41 +173,41 @@ button{
 
 .main{
   flex:1;
+  min-width:0;
   display:flex;
   flex-direction:column;
-  min-width:0;
 }
 
 .topbar{
   height:65px;
   border-bottom:1px solid var(--border);
+  background:rgba(6,9,18,.8);
   display:flex;
   align-items:center;
   justify-content:space-between;
   padding:0 20px;
-  background:rgba(7,11,20,.85);
 }
 
-.status{
+.online{
   display:flex;
   align-items:center;
   gap:8px;
-  font-size:14px;
+  font-size:13px;
 }
 
-.dot{
+.onlineDot{
   width:9px;
   height:9px;
+  background:var(--success);
   border-radius:50%;
-  background:#48e58c;
-  box-shadow:0 0 12px #48e58c;
+  box-shadow:0 0 12px var(--success);
 }
 
 .mode{
-  background:#111a2b;
+  background:#101a2c;
   color:white;
   border:1px solid var(--border);
-  padding:8px 12px;
+  padding:8px 11px;
   border-radius:9px;
 }
 
@@ -201,76 +215,92 @@ button{
 
 .chat{
   flex:1;
-  overflow-y:auto;
-  padding:28px;
+  overflow:auto;
+  padding:30px 20px;
 }
 
 .welcome{
-  max-width:800px;
-  margin:50px auto;
+  max-width:850px;
+  margin:40px auto;
   text-align:center;
 }
 
+.moon{
+  font-size:65px;
+  filter:drop-shadow(0 0 20px rgba(109,140,255,.5));
+}
+
 .welcome h1{
-  font-size:42px;
-  margin:10px 0;
-  background:linear-gradient(90deg,#fff,#849bff);
+  margin:8px 0;
+  font-size:44px;
+  background:linear-gradient(90deg,#ffffff,#8197ff,#b17dff);
   -webkit-background-clip:text;
   color:transparent;
 }
 
 .welcome p{
   color:var(--muted);
+  line-height:1.6;
 }
 
-.features{
+.featureGrid{
+  margin-top:30px;
   display:grid;
   grid-template-columns:repeat(3,1fr);
   gap:12px;
-  margin-top:30px;
 }
 
 .feature{
+  text-align:left;
   padding:16px;
   border:1px solid var(--border);
-  background:#0d1424;
-  border-radius:14px;
+  background:rgba(15,24,42,.75);
+  border-radius:15px;
+}
+
+.featureIcon{
+  font-size:23px;
+  margin-bottom:8px;
 }
 
 .feature b{
   display:block;
-  margin-bottom:6px;
+  margin-bottom:5px;
 }
 
 .feature span{
-  font-size:12px;
   color:var(--muted);
+  font-size:11px;
+  line-height:1.5;
 }
 
+/* MESSAGES */
+
 .message{
-  display:flex;
-  gap:12px;
   max-width:900px;
-  margin:0 auto 20px;
+  margin:0 auto 18px;
+  display:flex;
+  gap:10px;
 }
 
 .avatar{
   width:36px;
   height:36px;
-  flex-shrink:0;
+  min-width:36px;
   border-radius:50%;
   display:flex;
   align-items:center;
   justify-content:center;
-  background:#18233c;
+  background:#18243b;
 }
 
 .messageContent{
-  max-width:80%;
+  max-width:82%;
   padding:13px 16px;
   border-radius:15px;
-  line-height:1.55;
   white-space:pre-wrap;
+  line-height:1.6;
+  font-size:14px;
 }
 
 .user .messageContent{
@@ -278,106 +308,109 @@ button{
 }
 
 .bot .messageContent{
-  background:var(--bot);
+  background:var(--card);
   border:1px solid var(--border);
 }
 
 /* COMPOSER */
 
-.composerWrap{
-  padding:15px 20px 20px;
+.composerArea{
   border-top:1px solid var(--border);
-  background:#080d18;
+  padding:14px 20px 18px;
+  background:#070c16;
 }
 
 .composer{
   max-width:900px;
   margin:auto;
   display:flex;
-  gap:9px;
+  gap:8px;
   align-items:flex-end;
 }
 
-textarea{
-  flex:1;
-  resize:none;
-  min-height:48px;
-  max-height:150px;
-  padding:13px 15px;
-  background:#10182a;
-  border:1px solid var(--border);
-  border-radius:14px;
-  color:white;
-  outline:none;
-}
-
-textarea:focus{
-  border-color:#536ed0;
-}
-
-.iconBtn,
-.sendBtn{
+.voice,
+.send{
   width:48px;
   height:48px;
   border-radius:13px;
   border:1px solid var(--border);
-  background:#111a2b;
   color:white;
+  background:#101a2b;
 }
 
-.sendBtn{
+.send{
+  border:0;
   background:linear-gradient(135deg,var(--accent),var(--accent2));
-  border:none;
   font-size:18px;
+}
+
+textarea{
+  flex:1;
+  min-height:48px;
+  max-height:150px;
+  resize:none;
+  border:1px solid var(--border);
+  outline:none;
+  border-radius:14px;
+  background:#10192a;
+  color:white;
+  padding:13px 15px;
+}
+
+textarea:focus{
+  border-color:#6178d7;
 }
 
 .hint{
   max-width:900px;
   margin:7px auto 0;
-  color:#65738c;
-  font-size:11px;
+  color:#59677f;
   text-align:center;
+  font-size:10px;
 }
 
 /* MOBILE */
 
 @media(max-width:800px){
+
   .sidebar{
-    width:70px;
+    width:68px;
     padding:10px;
   }
 
-  .logoText,
-  .version,
-  .sideTitle,
+  .logoName,
+  .badge,
+  .sectionTitle,
   .history,
-  .creator{
+  .creatorCard{
     display:none;
   }
 
-  .sideButtons{
-    margin-top:auto;
+  .newChat{
+    font-size:0;
+    height:45px;
   }
 
-  .sideBtn{
+  .newChat::after{
+    content:"+";
+    font-size:20px;
+  }
+
+  .sideButton{
     font-size:0;
     text-align:center;
   }
 
-  .features{
+  .featureGrid{
     grid-template-columns:1fr;
   }
 
   .welcome h1{
-    font-size:30px;
+    font-size:32px;
   }
 
   .chat{
-    padding:15px;
-  }
-
-  .messageContent{
-    max-width:90%;
+    padding:18px 12px;
   }
 }
 </style>
@@ -387,180 +420,177 @@ textarea:focus{
 
 <div class="app">
 
-  <!-- SIDEBAR -->
-  <aside class="sidebar">
+<!-- SIDEBAR -->
 
-    <div class="logo">
-      <div class="logoIcon">🌙</div>
-      <div class="logoText">
-        MoonBot
-        <span class="version">V5</span>
-      </div>
+<aside class="sidebar">
+
+  <div class="logo">
+    <div class="logoIcon">🌙</div>
+
+    <div class="logoName">
+      MoonBot
+      <span class="badge">V5</span>
     </div>
+  </div>
 
-    <button class="newChat" onclick="newChat()">＋ New Chat</button>
+  <button class="newChat" onclick="newChat()">
+    ＋ New Chat
+  </button>
 
-    <div class="sideTitle">CHAT HISTORY</div>
-    <div class="history" id="history"></div>
+  <div class="sectionTitle">
+    CHAT HISTORY
+  </div>
 
-    <div class="sideButtons">
-      <button class="sideBtn" onclick="toggleTheme()">🌗 Theme</button>
-      <button class="sideBtn" onclick="showCreator()">👤 Creator</button>
-      <button class="sideBtn" onclick="showHistory()">📖 MoonBot History</button>
-      <button class="sideBtn" onclick="clearHistory()">🗑️ Clear History</button>
-    </div>
+  <div class="history" id="history"></div>
 
-    <div class="creator">
-      Created by <strong>Nazreel</strong><br>
-      MoonBot V5 · 2026
-    </div>
+  <div class="sideActions">
 
-  </aside>
+    <button class="sideButton" onclick="showCreator()">
+      👤 Creator
+    </button>
 
+    <button class="sideButton" onclick="showMoonHistory()">
+      📖 Sejarah MoonBot
+    </button>
 
-  <!-- MAIN -->
-  <main class="main">
+    <button class="sideButton" onclick="showCapabilities()">
+      🧠 Kebolehan
+    </button>
 
-    <header class="topbar">
-      <div class="status">
-        <span class="dot"></span>
-        MoonBot V5 Online
-      </div>
+    <button class="sideButton" onclick="toggleTheme()">
+      🌗 Tukar Tema
+    </button>
 
-      <select class="mode" id="mode">
-        <option value="normal">😊 Normal</option>
-        <option value="study">🧠 Study</option>
-        <option value="creative">🎨 Creative</option>
-        <option value="code">💻 Coding</option>
-      </select>
-    </header>
+    <button class="sideButton" onclick="clearAll()">
+      🗑️ Padam Chat
+    </button>
 
+  </div>
 
-    <section class="chat" id="chat">
+  <div class="creatorCard">
+    <strong>MoonBot V5</strong><br>
+    Creator: <strong>Nazreel</strong><br>
+    Started: 2026<br>
+    Assisted by: ChatGPT
+  </div>
 
-      <div class="welcome" id="welcome">
-
-        <div style="font-size:55px">🌙</div>
-
-        <h1>MoonBot V5</h1>
-
-        <p>
-          Chatbot JavaScript tanpa API.
-          Dibina oleh Nazreel pada tahun 2026.
-        </p>
-
-        <div class="features">
-
-          <div class="feature">
-            <b>🧠 Smart Brain</b>
-            <span>BM, English, slang, typo ringan & pelbagai kategori.</span>
-          </div>
-
-          <div class="feature">
-            <b>📚 Study</b>
-            <span>Soalan sekolah, BM, Sains, Sejarah & pengetahuan am.</span>
-          </div>
-
-          <div class="feature">
-            <b>🧮 Tools</b>
-            <span>Calculator, converter, masa dan tarikh.</span>
-          </div>
-
-          <div class="feature">
-            <b>🎙️ Voice</b>
-            <span>Gunakan mikrofon untuk bercakap dengan MoonBot.</span>
-          </div>
-
-          <div class="feature">
-            <b>💻 Coding</b>
-            <span>Bantuan asas HTML, CSS dan JavaScript.</span>
-          </div>
-
-          <div class="feature">
-            <b>💾 Memory</b>
-            <span>Chat history disimpan dalam browser.</span>
-          </div>
-
-        </div>
-
-      </div>
-
-    </section>
+</aside>
 
 
-    <div class="composerWrap">
+<!-- MAIN -->
 
-      <div class="composer">
+<main class="main">
 
-        <button class="iconBtn" onclick="startVoice()" title="Voice">
-          🎙️
-        </button>
+<header class="topbar">
 
-        <textarea
-          id="input"
-          placeholder="Tulis mesej kepada MoonBot..."
-          onkeydown="handleKey(event)"
-        ></textarea>
+  <div class="online">
+    <span class="onlineDot"></span>
+    MoonBot V5 Online
+  </div>
 
-        <button class="sendBtn" onclick="sendMessage()">
-          ➤
-        </button>
+  <select class="mode" id="mode">
+    <option value="normal">😊 Normal</option>
+    <option value="study">🧠 Study</option>
+    <option value="creative">🎨 Creative</option>
+    <option value="code">💻 Coding</option>
+    <option value="quick">⚡ Quick Answer</option>
+  </select>
 
-      </div>
+</header>
 
-      <div class="hint">
-        MoonBot V5 menggunakan JavaScript tempatan — tiada API diperlukan.
-      </div>
 
-    </div>
+<section class="chat" id="chat"></section>
 
-  </main>
+
+<div class="composerArea">
+
+  <div class="composer">
+
+    <button class="voice" onclick="voiceInput()">
+      🎙️
+    </button>
+
+    <textarea
+      id="input"
+      placeholder="Tanya MoonBot apa sahaja..."
+      onkeydown="keyHandler(event)"
+    ></textarea>
+
+    <button class="send" onclick="sendMessage()">
+      ➤
+    </button>
+
+  </div>
+
+  <div class="hint">
+    MoonBot V5 Ultimate · JavaScript Edition · Tanpa API
+  </div>
+
+</div>
+
+</main>
 
 </div>
 
 
 <script>
 
-/* =========================================
-   STORAGE
-========================================= */
+/* =====================================================
+   MOONBOT V5 ULTIMATE
+   Creator: Nazreel
+   Year: 2026
+   Assisted by: ChatGPT
+===================================================== */
 
-let messages = JSON.parse(localStorage.getItem("moonbot_messages") || "[]");
 
-let theme = localStorage.getItem("moonbot_theme") || "dark";
+/* =========================
+   DATA
+========================= */
+
+let messages =
+JSON.parse(localStorage.getItem("moonbot_v5_messages") || "[]");
+
+let historyTitles =
+JSON.parse(localStorage.getItem("moonbot_v5_history") || "[]");
+
+let theme =
+localStorage.getItem("moonbot_v5_theme") || "dark";
+
+
+/* =========================
+   STARTUP
+========================= */
 
 applyTheme();
 renderHistory();
-renderMessages();
+renderChat();
 
 
-/* =========================================
+/* =========================
    THEME
-========================================= */
+========================= */
 
 function applyTheme(){
 
   if(theme === "light"){
 
-    document.documentElement.style.setProperty("--bg","#f3f6fb");
+    document.documentElement.style.setProperty("--bg","#f2f5fa");
     document.documentElement.style.setProperty("--panel","#ffffff");
-    document.documentElement.style.setProperty("--panel2","#eef2f8");
+    document.documentElement.style.setProperty("--card","#ffffff");
+    document.documentElement.style.setProperty("--border","#dce3ed");
     document.documentElement.style.setProperty("--text","#101827");
     document.documentElement.style.setProperty("--muted","#617087");
-    document.documentElement.style.setProperty("--border","#dce3ee");
-    document.documentElement.style.setProperty("--bot","#ffffff");
     document.documentElement.style.setProperty("--user","#dbe5ff");
 
   }else{
 
-    document.documentElement.style.setProperty("--bg","#070b14");
-    document.documentElement.style.setProperty("--panel","#0d1322");
-    document.documentElement.style.setProperty("--panel2","#111a2d");
-    document.documentElement.style.setProperty("--text","#eef4ff");
+    document.documentElement.style.setProperty("--bg","#060912");
+    document.documentElement.style.setProperty("--panel","#0b1220");
+    document.documentElement.style.setProperty("--card","#111b2e");
+    document.documentElement.style.setProperty("--border","#1e2b44");
+    document.documentElement.style.setProperty("--text","#f1f5ff");
     document.documentElement.style.setProperty("--muted","#91a0b8");
-    document.documentElement.style.setProperty("--border","#1d2940");
-    document.documentElement.style.setProperty("--bot","#121c30");
-    document.documentElement.style.setProperty("--user","#263a73");
+    document.documentElement.style.setProperty("--user","#263c7a");
 
   }
 }
@@ -570,92 +600,120 @@ function toggleTheme(){
 
   theme = theme === "dark" ? "light" : "dark";
 
-  localStorage.setItem("moonbot_theme",theme);
-
-  applyTheme();
-}
-
-
-/* =========================================
-   CHAT
-========================================= */
-
-function sendMessage(){
-
-  const input = document.getElementById("input");
-
-  const text = input.value.trim();
-
-  if(!text) return;
-
-  addMessage("user",text);
-
-  input.value = "";
-
-  setTimeout(()=>{
-
-    const reply = moonBrain(text);
-
-    addMessage("bot",reply);
-
-  },250);
-}
-
-
-function addMessage(role,text){
-
-  messages.push({
-    role,
-    text,
-    time:Date.now()
-  });
-
   localStorage.setItem(
-    "moonbot_messages",
-    JSON.stringify(messages)
+    "moonbot_v5_theme",
+    theme
   );
 
-  renderMessages();
-
-  setTimeout(()=>{
-    const chat=document.getElementById("chat");
-    chat.scrollTop=chat.scrollHeight;
-  },20);
+  applyTheme();
 
 }
 
 
-function renderMessages(){
+/* =========================
+   CHAT RENDER
+========================= */
+
+function renderChat(){
 
   const chat=document.getElementById("chat");
 
-  if(messages.length === 0){
+  if(messages.length===0){
 
-    chat.innerHTML = document.getElementById("welcome")
-      ? document.getElementById("welcome").outerHTML
-      : "";
+    chat.innerHTML=`
+
+      <div class="welcome">
+
+        <div class="moon">🌙</div>
+
+        <h1>MoonBot V5</h1>
+
+        <p>
+          MoonBot V5 Ultimate ialah chatbot JavaScript
+          yang dibina oleh Nazreel pada tahun 2026.
+          Versi ini tidak menggunakan API.
+        </p>
+
+        <div class="featureGrid">
+
+          <div class="feature">
+            <div class="featureIcon">🧠</div>
+            <b>Smart Brain</b>
+            <span>
+              Knowledge database, BM, English,
+              slang dan soalan umum.
+            </span>
+          </div>
+
+          <div class="feature">
+            <div class="featureIcon">📚</div>
+            <b>Study</b>
+            <span>
+              BM, Matematik, Sains, Sejarah,
+              Geografi dan pengetahuan am.
+            </span>
+          </div>
+
+          <div class="feature">
+            <div class="featureIcon">🧮</div>
+            <b>Tools</b>
+            <span>
+              Calculator, converter,
+              tarikh dan masa.
+            </span>
+          </div>
+
+          <div class="feature">
+            <div class="featureIcon">💻</div>
+            <b>Coding</b>
+            <span>
+              HTML, CSS dan JavaScript asas.
+            </span>
+          </div>
+
+          <div class="feature">
+            <div class="featureIcon">🎙️</div>
+            <b>Voice</b>
+            <span>
+              Voice input menggunakan browser.
+            </span>
+          </div>
+
+          <div class="feature">
+            <div class="featureIcon">💾</div>
+            <b>Memory</b>
+            <span>
+              Chat history disimpan dalam browser.
+            </span>
+          </div>
+
+        </div>
+
+      </div>
+    `;
 
     return;
+
   }
+
 
   chat.innerHTML="";
 
-  messages.forEach(m=>{
+  messages.forEach(message=>{
 
     const div=document.createElement("div");
 
-    div.className="message "+m.role;
+    div.className="message "+message.role;
 
     div.innerHTML=`
 
       <div class="avatar">
-        ${m.role==="user" ? "👤" : "🌙"}
+        ${message.role==="user" ? "👤" : "🌙"}
       </div>
 
       <div class="messageContent">
-        ${escapeHTML(m.text)}
+        ${escapeHTML(message.text)}
       </div>
-
     `;
 
     chat.appendChild(div);
@@ -677,101 +735,154 @@ function escapeHTML(text){
 }
 
 
-/* =========================================
+/* =========================
+   SEND
+========================= */
+
+function sendMessage(){
+
+  const input=document.getElementById("input");
+
+  const text=input.value.trim();
+
+  if(!text)return;
+
+  addMessage("user",text);
+
+  input.value="";
+
+  saveTitle(text);
+
+  setTimeout(()=>{
+
+    addMessage(
+      "bot",
+      moonBrain(text)
+    );
+
+  },180);
+
+}
+
+
+function addMessage(role,text){
+
+  messages.push({
+    role:role,
+    text:text,
+    time:Date.now()
+  });
+
+  localStorage.setItem(
+    "moonbot_v5_messages",
+    JSON.stringify(messages)
+  );
+
+  renderChat();
+
+  const chat=document.getElementById("chat");
+
+  setTimeout(()=>{
+    chat.scrollTop=chat.scrollHeight;
+  },20);
+
+}
+
+
+/* =========================
+   HISTORY
+========================= */
+
+function saveTitle(text){
+
+  if(historyTitles[historyTitles.length-1]===text)
+    return;
+
+  historyTitles.push(text);
+
+  historyTitles=historyTitles.slice(-20);
+
+  localStorage.setItem(
+    "moonbot_v5_history",
+    JSON.stringify(historyTitles)
+  );
+
+  renderHistory();
+
+}
+
+
+function renderHistory(){
+
+  const box=document.getElementById("history");
+
+  box.innerHTML="";
+
+  historyTitles
+    .slice()
+    .reverse()
+    .forEach(title=>{
+
+      const div=document.createElement("div");
+
+      div.className="historyItem";
+
+      div.textContent="💬 "+title.slice(0,35);
+
+      box.appendChild(div);
+
+    });
+
+}
+
+
+/* =========================
    NEW CHAT
-========================================= */
+========================= */
 
 function newChat(){
 
   messages=[];
 
   localStorage.setItem(
-    "moonbot_messages",
+    "moonbot_v5_messages",
     JSON.stringify(messages)
   );
 
-  renderMessages();
+  renderChat();
+
 }
 
 
-/* =========================================
+/* =========================
    CLEAR
-========================================= */
+========================= */
 
-function clearHistory(){
+function clearAll(){
 
-  if(confirm("Padam semua sejarah chat MoonBot?")){
+  if(!confirm("Padam semua chat MoonBot?"))
+    return;
 
-    messages=[];
+  messages=[];
 
-    localStorage.removeItem("moonbot_messages");
+  historyTitles=[];
 
-    renderMessages();
-    renderHistory();
+  localStorage.removeItem("moonbot_v5_messages");
 
-  }
+  localStorage.removeItem("moonbot_v5_history");
 
-}
+  renderChat();
 
-
-/* =========================================
-   HISTORY
-========================================= */
-
-function renderHistory(){
-
-  const box=document.getElementById("history");
-
-  const old=JSON.parse(
-    localStorage.getItem("moonbot_history_titles") || "[]"
-  );
-
-  box.innerHTML="";
-
-  old.slice(-15).reverse().forEach(title=>{
-
-    const item=document.createElement("div");
-
-    item.className="historyItem";
-
-    item.textContent="💬 "+title;
-
-    box.appendChild(item);
-
-  });
+  renderHistory();
 
 }
 
 
-function saveHistoryTitle(text){
+/* =========================
+   KEY
+========================= */
 
-  let old=JSON.parse(
-    localStorage.getItem("moonbot_history_titles") || "[]"
-  );
-
-  if(old[old.length-1] !== text){
-
-    old.push(text);
-
-    old=old.slice(-15);
-
-    localStorage.setItem(
-      "moonbot_history_titles",
-      JSON.stringify(old)
-    );
-
-    renderHistory();
-
-  }
-
-}
-
-
-/* =========================================
-   KEYBOARD
-========================================= */
-
-function handleKey(event){
+function keyHandler(event){
 
   if(event.key==="Enter" && !event.shiftKey){
 
@@ -784,32 +895,31 @@ function handleKey(event){
 }
 
 
-/* =========================================
+/* =========================
    VOICE
-========================================= */
+========================= */
 
-function startVoice(){
+function voiceInput(){
 
-  const SpeechRecognition =
+  const Recognition =
     window.SpeechRecognition ||
     window.webkitSpeechRecognition;
 
-  if(!SpeechRecognition){
+  if(!Recognition){
 
     alert(
-      "Browser ini tidak menyokong voice input. Cuba Google Chrome."
+      "Voice input tidak disokong browser ini. Cuba Google Chrome."
     );
 
     return;
+
   }
 
-  const recognition=new SpeechRecognition();
+  const recognition=new Recognition();
 
   recognition.lang="ms-MY";
 
   recognition.interimResults=false;
-
-  recognition.start();
 
   recognition.onresult=function(event){
 
@@ -818,30 +928,37 @@ function startVoice(){
 
   };
 
+  recognition.start();
+
 }
 
 
-/* =========================================
-   CALCULATOR
-========================================= */
+/* =====================================================
+   TOOLS
+===================================================== */
 
-function calculate(text){
+
+/* CALCULATOR */
+
+function calculator(text){
 
   let expression=text
-    .replace(/kira/gi,"")
     .replace(/berapa/gi,"")
+    .replace(/kira/gi,"")
     .replace(/calculate/gi,"")
+    .replace(/hasil/gi,"")
     .replace(/=/g,"")
     .trim();
 
-  if(!/^[0-9+\-*/().%\s]+$/.test(expression)){
+  if(!/^[0-9+\-*/().%\s]+$/.test(expression))
     return null;
-  }
 
   try{
 
     const result=Function(
-      '"use strict";return ('+expression+')'
+      '"use strict";return ('+
+      expression+
+      ')'
     )();
 
     if(Number.isFinite(result)){
@@ -850,132 +967,128 @@ function calculate(text){
 
     }
 
-  }catch(e){}
+  }catch(error){}
 
   return null;
+
 }
 
 
-/* =========================================
-   CONVERTER
-========================================= */
+/* UNIT */
 
-function converter(text){
+function unitConverter(text){
 
-  let m=text.match(
-    /(\d+(?:\.\d+)?)\s*(km|m|cm|kg|g|c|°c)\s*(?:ke|to)\s*(km|m|cm|kg|g|c|°c)/i
+  const match=text.match(
+    /(\d+(?:\.\d+)?)\s*(km|m|cm|mm|kg|g|mg)\s*(?:ke|to)\s*(km|m|cm|mm|kg|g|mg)/i
   );
 
-  if(!m) return null;
+  if(!match)return null;
 
-  let value=parseFloat(m[1]);
+  const value=parseFloat(match[1]);
 
-  let from=m[2].toLowerCase();
+  const from=match[2].toLowerCase();
 
-  let to=m[3].toLowerCase();
+  const to=match[3].toLowerCase();
 
-  let meters;
 
-  if(from==="km") meters=value*1000;
-  else if(from==="m") meters=value;
-  else if(from==="cm") meters=value/100;
-  else if(from==="kg"){
+  const length={
+    km:1000,
+    m:1,
+    cm:.01,
+    mm:.001
+  };
 
-    if(to==="g")
-      return "🔄 "+value+" kg = "+(value*1000)+" g";
+  const weight={
+    kg:1000,
+    g:1,
+    mg:.001
+  };
 
-    return null;
+
+  if(length[from] && length[to]){
+
+    const meters=value*length[from];
+
+    const result=meters/length[to];
+
+    return `🔄 ${value} ${from} = ${result} ${to}`;
+
   }
-  else if(from==="g"){
 
-    if(to==="kg")
-      return "🔄 "+value+" g = "+(value/1000)+" kg";
 
-    return null;
-  }
-  else return null;
+  if(weight[from] && weight[to]){
 
-  let result;
+    const grams=value*weight[from];
 
-  if(to==="km") result=meters/1000;
-  else if(to==="m") result=meters;
-  else if(to==="cm") result=meters*100;
+    const result=grams/weight[to];
 
-  if(result!==undefined){
-
-    return "🔄 "+value+" "+from+" = "+result+" "+to;
+    return `⚖️ ${value} ${from} = ${result} ${to}`;
 
   }
 
   return null;
+
 }
 
 
-/* =========================================
-   TIME
-========================================= */
+/* TIME */
 
-function currentTime(){
-
-  const d=new Date();
+function timeAnswer(){
 
   return "🕒 Sekarang pukul "+
-    d.toLocaleTimeString("ms-MY",{
-      hour:"2-digit",
-      minute:"2-digit",
-      second:"2-digit"
-    })+
-    ".";
+    new Date().toLocaleTimeString(
+      "ms-MY",
+      {
+        hour:"2-digit",
+        minute:"2-digit",
+        second:"2-digit"
+      }
+    );
 
 }
 
 
-/* =========================================
-   DATE
-========================================= */
+/* DATE */
 
-function currentDate(){
-
-  const d=new Date();
+function dateAnswer(){
 
   return "📅 Hari ini ialah "+
-    d.toLocaleDateString("ms-MY",{
-      weekday:"long",
-      day:"numeric",
-      month:"long",
-      year:"numeric"
-    })+".";
+    new Date().toLocaleDateString(
+      "ms-MY",
+      {
+        weekday:"long",
+        day:"numeric",
+        month:"long",
+        year:"numeric"
+      }
+    )+".";
 
 }
 
 
-/* =========================================
-   MAIN BRAIN
-========================================= */
+/* =====================================================
+   KNOWLEDGE BRAIN
+===================================================== */
 
-function moonBrain(raw){
-
-  const original=raw.trim();
+function moonBrain(original){
 
   const text=original
     .toLowerCase()
-    .replace(/[?!.,]/g," ")
+    .replace(/[?!.,;:]/g," ")
     .replace(/\s+/g," ")
     .trim();
 
 
-  /* CALCULATOR */
+  /* TOOLS */
 
-  const calc=calculate(text);
+  const calc=calculator(text);
 
-  if(calc) return calc;
+  if(calc)return calc;
 
 
-  /* CONVERTER */
+  const unit=unitConverter(text);
 
-  const conv=converter(text);
-
-  if(conv) return conv;
+  if(unit)return unit;
 
 
   /* TIME */
@@ -983,11 +1096,11 @@ function moonBrain(raw){
   if(
     text.includes("pukul berapa") ||
     text.includes("jam berapa") ||
-    text==="masa sekarang" ||
+    text.includes("masa sekarang") ||
     text.includes("current time")
   ){
 
-    return currentTime();
+    return timeAnswer();
 
   }
 
@@ -1000,29 +1113,23 @@ function moonBrain(raw){
     text.includes("date today")
   ){
 
-    return currentDate();
+    return dateAnswer();
 
   }
 
 
-  /* GREETING */
+  /* GREETINGS */
 
   if(
-    /^(hai|hi|hello|helo|hey|wei|weh|yo|assalamualaikum|salam)$/.test(text) ||
-    text.includes("hai moonbot") ||
-    text.includes("hello moonbot")
+    /^(hai|hi|hello|helo|hey|wei|weh|yo|salam)$/.test(text)
   ){
 
-    const replies=[
-      "Hejj 😎🌙 Aku MoonBot V5. Ada apa hari ni?",
-      "Yo wei 🌙🔥 MoonBot V5 online.",
-      "Hehe hai 👋 Nak sembang, study atau test aku?",
-      "MoonBot dah aktif 😎 Apa yang kau nak tanya?"
-    ];
-
-    return replies[
-      Math.floor(Math.random()*replies.length)
-    ];
+    return random([
+      "Hejj wei 😎🌙 MoonBot V5 dah online.",
+      "Yo 😎 Apa cerita hari ni?",
+      "Haiii 👋 MoonBot standby.",
+      "Hehe hai 😂 Nak sembang atau test aku?"
+    ]);
 
   }
 
@@ -1031,27 +1138,32 @@ function moonBrain(raw){
 
   if(
     text.includes("siapa kau") ||
-    text.includes("siapa awak") ||
     text.includes("kau siapa") ||
+    text.includes("siapa awak") ||
     text.includes("what are you")
   ){
 
-    return `Aku MoonBot V5 🌙
+    return `🌙 Aku MoonBot V5 Ultimate.
 
-Aku ialah chatbot JavaScript yang dibina tanpa API.
+Aku ialah chatbot berasaskan HTML + CSS + JavaScript.
 
 Aku boleh:
-• jawab soalan asas
-• bantu belajar
-• buat kiraan
-• converter
-• bantu coding asas
-• faham BM + English + slang ringan
-• simpan sejarah chat dalam browser
-• voice input
-• tukar theme
+🧠 Knowledge asas
+📚 Study
+🧮 Calculator
+🔄 Converter
+🕒 Masa
+📅 Tarikh
+💻 Coding
+🎨 Creative ideas
+🎙️ Voice input
+💾 Chat history
+🌗 Theme
+📖 Sejarah projek
 
-Aku belum LLM sebenar macam ChatGPT sebab aku tak menggunakan API.`;
+Aku tidak menggunakan API.
+
+Jadi aku bukan LLM sebenar seperti ChatGPT, tetapi aku boleh mempunyai banyak fungsi melalui JavaScript.`;
 
   }
 
@@ -1059,21 +1171,21 @@ Aku belum LLM sebenar macam ChatGPT sebab aku tak menggunakan API.`;
   /* CREATOR */
 
   if(
-    text.includes("siapa pencipta") ||
-    text.includes("siapa creator") ||
+    text.includes("siapa pencipta moonbot") ||
+    text.includes("siapa creator moonbot") ||
     text.includes("siapa buat moonbot") ||
-    text.includes("siapa yang buat moonbot")
+    text.includes("pencipta moonbot")
   ){
 
-    return `👤 Pencipta MoonBot
+    return `👤 PENCIPTA MOONBOT
 
 Nama: Nazreel
 Projek: MoonBot
-Versi: V5
-Tahun mula: 2026
+Versi: V5 Ultimate
+Tahun bermula: 2026
 Dibantu oleh: ChatGPT
 
-MoonBot bermula daripada idea Nazreel untuk menghasilkan chatbot sendiri menggunakan teknologi web. 🌙`;
+MoonBot ialah projek chatbot peribadi yang dibangunkan menggunakan teknologi web seperti HTML, CSS dan JavaScript. 🌙`;
 
   }
 
@@ -1082,16 +1194,19 @@ MoonBot bermula daripada idea Nazreel untuk menghasilkan chatbot sendiri menggun
 
   if(
     text==="nazreel" ||
+    text.includes("siapa nazreel") ||
     text.includes("tentang nazreel")
   ){
 
-    return `Nazreel ialah pencipta MoonBot 🌙
+    return `👤 NAZREEL
 
-Projek ini bermula pada tahun 2026 dan berkembang melalui beberapa versi sehingga MoonBot V5.
+Nazreel ialah pencipta projek MoonBot.
 
-Quote projek:
+Pada tahun 2026, Nazreel mula membina idea chatbot sendiri menggunakan teknologi web.
 
-"Satu idea pada waktu malam menjadi permulaan kepada sebuah projek."`;
+Daripada idea tersebut, MoonBot berkembang melalui beberapa versi sehingga MoonBot V5.
+
+🌙 MoonBot ialah projek yang dibina daripada idea, eksperimen dan pembelajaran.`;
 
   }
 
@@ -1100,60 +1215,100 @@ Quote projek:
 
   if(
     text.includes("sejarah moonbot") ||
-    text.includes("moonbot bermula") ||
-    text.includes("history moonbot")
+    text.includes("history moonbot") ||
+    text.includes("bagaimana moonbot dicipta") ||
+    text.includes("macam mana moonbot dicipta")
   ){
 
-    return `📖 Sejarah MoonBot
+    return `📖 SEJARAH MOONBOT
 
-Pada suatu malam pada tahun 2026, Nazreel mendapat idea untuk mencipta sebuah chatbot AI sendiri.
+Pada suatu malam pada tahun 2026, Nazreel mendapat idea untuk mencipta sebuah chatbot sendiri.
 
 Dengan bantuan ChatGPT, Nazreel mula belajar membina chatbot menggunakan HTML dan JavaScript.
 
-Daripada idea kecil itu, lahirlah MoonBot.
+Daripada idea kecil itu lahirlah MoonBot.
 
-Projek tersebut berkembang melalui beberapa versi sehingga MoonBot V4.
+Projek tersebut berkembang melalui beberapa versi.
 
-Kemudian Nazreel membayangkan MoonBot V5 sebagai versi yang lebih maju dengan:
+MoonBot kemudian dibayangkan sebagai sistem yang lebih besar dengan:
 
-🧠 reasoning
-🔎 web search
-💬 memory
-🎙️ voice
-👁️ vision
-💻 coding
-🧰 tools
+🧠 Intelligence
+🔎 Web knowledge
+💬 Conversation
+💾 Memory
+🎙️ Voice
+👁️ Vision
+💻 Coding
+🧰 Tools
 
-Versi semasa ini ialah versi JavaScript tanpa API.`;
+Versi ini ialah MoonBot V5 Ultimate tanpa API.
+
+Ia direka sebagai eksperimen untuk membina chatbot menggunakan teknologi web sahaja.
+
+🌙 "Satu idea pada waktu malam menjadi permulaan kepada sebuah projek."`;
 
   }
 
 
-  /* FUNCTIONS */
+  /* VERSION */
+
+  if(
+    text.includes("versi moonbot") ||
+    text.includes("moonbot v5")
+  ){
+
+    return `🌙 MOONBOT V5 ULTIMATE
+
+Versi: V5
+Tahun: 2026
+Creator: Nazreel
+Teknologi: HTML + CSS + JavaScript
+API: Tidak digunakan
+
+Fokus:
+🧠 Brain
+📚 Knowledge
+🧮 Tools
+🎙️ Voice
+💾 Memory
+🎨 UI
+🌗 Theme`;
+
+  }
+
+
+  /* CAPABILITIES */
 
   if(
     text.includes("moonbot boleh buat apa") ||
     text.includes("fungsi moonbot") ||
-    text.includes("what can you do") ||
+    text.includes("kebolehan moonbot") ||
     text.includes("apa yang kau boleh buat")
   ){
 
-    return `🌙 MoonBot V5 boleh buat:
+    return `🧠 KEBOLEHAN MOONBOT V5
 
-🧠 Smart conversation
-📚 Bantuan belajar
+💬 Conversation
+📚 Study
 🧮 Calculator
 🔄 Unit converter
-🕒 Masa
-📅 Tarikh
-💻 Coding asas
-📝 Idea karangan
+🕒 Current time
+📅 Current date
+🇲🇾 Malaysia knowledge
+🌎 General knowledge
+💻 HTML
+🎨 CSS
+⚙️ JavaScript
+📝 Writing ideas
 🎙️ Voice input
-🌗 Dark / Light theme
 💾 Chat history
-📖 Sejarah MoonBot
+🌗 Dark / Light mode
+🧠 Study Mode
+🎨 Creative Mode
+💻 Coding Mode
+⚡ Quick Mode
 
-Tetapi sebab versi ini tiada API, aku bukan LLM sebenar.`;
+Dan semuanya berjalan dalam satu fail index.html.`;
 
   }
 
@@ -1165,9 +1320,7 @@ Tetapi sebab versi ini tiada API, aku bukan LLM sebenar.`;
     text.includes("siapa buat chatgpt")
   ){
 
-    return `ChatGPT dibangunkan oleh OpenAI 🤖
-
-MoonBot pula ialah projek Nazreel yang dibina dengan bantuan ChatGPT. 🌙`;
+    return "🤖 ChatGPT dibangunkan oleh OpenAI.\n\n🌙 MoonBot pula ialah projek Nazreel yang dibangunkan dengan bantuan ChatGPT.";
 
   }
 
@@ -1185,10 +1338,19 @@ MoonBot pula ialah projek Nazreel yang dibina dengan bantuan ChatGPT. 🌙`;
 
 
   if(
+    text.includes("wilayah persekutuan malaysia")
+  ){
+
+    return "🇲🇾 Tiga Wilayah Persekutuan Malaysia ialah Kuala Lumpur, Putrajaya dan Labuan.";
+
+  }
+
+
+  if(
     text.includes("ibu negara malaysia")
   ){
 
-    return "🇲🇾 Ibu negara Malaysia ialah Kuala Lumpur.";
+    return "🇲🇾 Kuala Lumpur ialah ibu negara Malaysia.";
 
   }
 
@@ -1198,6 +1360,15 @@ MoonBot pula ialah projek Nazreel yang dibina dengan bantuan ChatGPT. 🌙`;
   ){
 
     return "💰 Mata wang Malaysia ialah Ringgit Malaysia (RM / MYR).";
+
+  }
+
+
+  if(
+    text.includes("bahasa rasmi malaysia")
+  ){
+
+    return "🇲🇾 Bahasa Melayu ialah bahasa kebangsaan Malaysia.";
 
   }
 
@@ -1214,7 +1385,36 @@ MoonBot pula ialah projek Nazreel yang dibina dengan bantuan ChatGPT. 🌙`;
   }
 
 
-  /* GENERAL KNOWLEDGE */
+  /* WORLD */
+
+  if(
+    text.includes("ibu negara indonesia")
+  ){
+
+    return "🇮🇩 Ibu negara Indonesia ialah Jakarta. Status ibu negara Indonesia sedang berubah dalam konteks pembangunan Nusantara, jadi untuk soalan semasa sebaiknya semak sumber terkini.";
+
+  }
+
+
+  if(
+    text.includes("ibu negara thailand")
+  ){
+
+    return "🇹🇭 Ibu negara Thailand ialah Bangkok.";
+
+  }
+
+
+  if(
+    text.includes("ibu negara singapura")
+  ){
+
+    return "🇸🇬 Singapura ialah sebuah negara kota; ibu negaranya juga Singapura.";
+
+  }
+
+
+  /* SCIENCE */
 
   if(text.includes("planet terbesar")){
 
@@ -1231,8 +1431,8 @@ MoonBot pula ialah projek Nazreel yang dibina dengan bantuan ChatGPT. 🌙`;
 
 
   if(
-    text.includes("matahari ialah planet") ||
-    text.includes("matahari planet")
+    text.includes("matahari planet") ||
+    text.includes("matahari ialah planet")
   ){
 
     return "☀️ Matahari bukan planet. Matahari ialah sebuah bintang.";
@@ -1242,18 +1442,89 @@ MoonBot pula ialah projek Nazreel yang dibina dengan bantuan ChatGPT. 🌙`;
 
   if(text.includes("air mendidih")){
 
-    return "💧 Pada tekanan atmosfera biasa, air mendidih pada sekitar 100°C.";
+    return "💧 Pada tekanan atmosfera biasa, air mendidih sekitar 100°C.";
 
   }
 
 
-  /* SCHOOL */
+  if(text.includes("air beku")){
+
+    return "🧊 Pada tekanan atmosfera biasa, air membeku sekitar 0°C.";
+
+  }
+
+
+  if(text.includes("graviti")){
+
+    return `🌍 Graviti ialah daya tarikan yang menyebabkan objek berjisim tertarik antara satu sama lain.
+
+Di permukaan Bumi, pecutan graviti sekitar 9.81 m/s².`;
+
+  }
+
+
+  if(text.includes("fotosintesis")){
+
+    return `🌱 Fotosintesis ialah proses tumbuhan menghasilkan makanan menggunakan tenaga cahaya.
+
+Bahan:
+☀️ Cahaya
+💧 Air
+🌫️ Karbon dioksida
+🌿 Klorofil
+
+Hasil:
+🍃 Glukosa
+💨 Oksigen`;
+
+  }
+
+
+  /* HUMAN BODY */
 
   if(
-    text.includes("kata hubung")
+    text.includes("organ terbesar manusia")
   ){
 
-    return `📚 Kata hubung ialah perkataan yang menghubungkan kata, frasa atau ayat.
+    return "🧍 Organ terbesar manusia ialah kulit.";
+
+  }
+
+
+  if(
+    text.includes("jantung manusia")
+  ){
+
+    return "❤️ Jantung ialah organ berotot yang mengepam darah ke seluruh badan.";
+
+  }
+
+
+  /* BM */
+
+  if(text.includes("kata nafi")){
+
+    return `📚 KATA NAFI
+
+"Tidak" biasanya digunakan untuk kata kerja dan kata adjektif.
+
+Contoh:
+Dia tidak pergi.
+Dia tidak rajin.
+
+"Bukan" biasanya digunakan untuk kata nama atau frasa nama.
+
+Contoh:
+Itu bukan buku saya.`;
+
+  }
+
+
+  if(text.includes("kata hubung")){
+
+    return `📚 KATA HUBUNG
+
+Kata hubung digunakan untuk menghubungkan perkataan, frasa atau ayat.
 
 Contoh:
 • dan
@@ -1262,46 +1533,56 @@ Contoh:
 • atau
 • sambil
 • lalu
+• supaya
+• apabila
 
-Contoh ayat:
+Contoh:
 "Ali rajin tetapi adiknya malas."`;
 
   }
 
 
-  if(
-    text.includes("kata nafi")
-  ){
+  if(text.includes("peribahasa")){
 
-    return `📚 Kata nafi utama:
+    return `📚 Contoh peribahasa:
 
-• tidak → untuk kata kerja dan kata adjektif
-• bukan → untuk kata nama / frasa nama
+• Bagai aur dengan tebing
+  = Saling membantu.
 
-Contoh:
-"Dia tidak pergi ke sekolah."
-"Itu bukan buku saya."`;
+• Berat sama dipikul, ringan sama dijinjing
+  = Bersama-sama menghadapi susah dan senang.
+
+• Kalau tidak dipecahkan ruyung, manakan dapat sagunya
+  = Kejayaan memerlukan usaha.
+
+• Sediakan payung sebelum hujan
+  = Bersedia sebelum sesuatu berlaku.`;
 
   }
 
 
-  /* SCIENCE */
+  /* HISTORY */
 
   if(
-    text.includes("fotosintesis")
+    text.includes("sejarah malaysia")
   ){
 
-    return `🌱 Fotosintesis ialah proses tumbuhan menghasilkan makanan menggunakan cahaya matahari.
+    return `🇲🇾 SEJARAH MALAYSIA
 
-Bahan utama:
-☀️ cahaya
-💧 air
-🌫️ karbon dioksida
-🌿 klorofil
+Tanah Melayu melalui pelbagai perkembangan sejarah sebelum pembentukan Malaysia.
 
-Hasil:
-🍃 glukosa
-💨 oksigen`;
+Malaysia dibentuk pada 16 September 1963 dengan penyertaan Persekutuan Tanah Melayu, Sabah, Sarawak dan Singapura.
+
+Singapura kemudiannya berpisah daripada Malaysia pada 9 Ogos 1965.`;
+
+  }
+
+
+  if(
+    text.includes("tunku abdul rahman")
+  ){
+
+    return "🇲🇾 Tunku Abdul Rahman Putra Al-Haj ialah Perdana Menteri pertama Persekutuan Tanah Melayu dan kemudian Malaysia.";
 
   }
 
@@ -1309,47 +1590,31 @@ Hasil:
   /* CODING */
 
   if(
-    text.includes("html")
+    text.includes("apa itu html")
   ){
 
-    return `💻 HTML digunakan untuk membina struktur halaman web.
+    return `💻 HTML
 
-Contoh asas:
-
-<!DOCTYPE html>
-<html>
-<head>
-<title>MoonBot</title>
-</head>
-<body>
-<h1>Hello MoonBot</h1>
-</body>
-</html>`;
-
-  }
-
-
-  if(
-    text.includes("javascript") ||
-    text.includes("js")
-  ){
-
-    return `💻 JavaScript digunakan untuk memberikan fungsi dan interaksi pada laman web.
+HTML ialah bahasa penanda yang digunakan untuk membina struktur halaman web.
 
 Contoh:
 
-let nama = "Nazreel";
+<h1>Hello MoonBot</h1>
 
-console.log("Hello " + nama);`;
+HTML = struktur
+CSS = gaya
+JavaScript = fungsi/interaksi`;
 
   }
 
 
   if(
-    text.includes("css")
+    text.includes("apa itu css")
   ){
 
-    return `🎨 CSS digunakan untuk menggayakan laman web.
+    return `🎨 CSS
+
+CSS digunakan untuk mengawal rupa dan gaya halaman web.
 
 Contoh:
 
@@ -1361,79 +1626,92 @@ body {
   }
 
 
-  /* STUDY MODE */
+  if(
+    text.includes("apa itu javascript")
+  ){
 
-  const mode=document.getElementById("mode")?.value;
+    return `⚙️ JavaScript
+
+JavaScript digunakan untuk menambahkan fungsi dan interaksi pada halaman web.
+
+Contoh:
+
+let nama = "Nazreel";
+
+console.log(nama);`;
+
+  }
+
+
+  /* MODES */
+
+  const mode=document.getElementById("mode").value;
+
 
   if(mode==="study"){
 
-    return `🧠 Study Mode aktif.
+    return `🧠 STUDY MODE
 
 Soalan kau:
-
 "${original}"
 
-Cuba jawab sendiri dulu.
+Cuba jawab dahulu.
 
-Kalau kau nak, tulis:
-"terangkan"
-atau
-"bagi jawapan"
+Aku boleh bantu dengan:
+• hint
+• penerangan
+• contoh
+• langkah penyelesaian
 
-dan aku akan bantu berdasarkan pengetahuan yang tersedia dalam MoonBot.`;
+Tulis "terangkan" kalau kau nak penerangan.`;
 
   }
 
-
-  /* CREATIVE */
 
   if(mode==="creative"){
 
-    return `🎨 Creative Mode aktif.
+    return `🎨 CREATIVE MODE
 
-Idea berdasarkan mesej kau:
-
+Idea kau:
 "${original}"
 
-Kita boleh jadikan idea itu sebagai:
-• cerita
-• lagu
-• puisi
-• skrip
-• dialog
-• konsep video
-• idea TikTok`;
+Aku boleh bantu jadikan idea ini sebagai:
+📖 cerita
+🎵 lagu
+🎬 skrip
+🎮 game concept
+📱 idea video
+✍️ puisi`;
 
   }
 
-
-  /* CODE MODE */
 
   if(mode==="code"){
 
-    return `💻 Coding Mode aktif.
+    return `💻 CODING MODE
+
+Topik:
+"${original}"
 
 Aku boleh bantu dengan:
-
 HTML
 CSS
 JavaScript
-debug asas
-struktur website
 UI
-fungsi chatbot
+website
+chatbot
+debug asas
 
-Cuba tulis kod atau masalah yang kau hadapi.`;
+Berikan kod atau terangkan masalah kau.`;
 
   }
 
 
-  /* THANKS */
+  /* CASUAL */
 
   if(
     text.includes("terima kasih") ||
     text.includes("thanks") ||
-    text.includes("thank you") ||
     text==="tq"
   ){
 
@@ -1442,77 +1720,129 @@ Cuba tulis kod atau masalah yang kau hadapi.`;
   }
 
 
-  /* YES */
-
   if(
-    text==="ok" ||
-    text==="okay" ||
-    text==="baik"
+    text.includes("bosan")
   ){
 
-    return "Baik 👍 MoonBot standby.";
+    return "Bosan eh 😂 Cuba test aku dengan soalan pelik, buat kuiz atau bina idea baru untuk MoonBot.";
 
   }
 
-
-  /* RANDOM CASUAL */
 
   if(
     text.includes("penat") ||
     text.includes("letih")
   ){
 
-    return "Kalau penat, rehat kejap dulu 😌 Lepas tu sambung balik. Jangan paksa diri sangat.";
+    return "Kalau penat, rehat sekejap dulu 😌 Lepas tu sambung balik.";
 
   }
 
 
   if(
-    text.includes("bosan")
+    text.includes("kau pandai")
   ){
 
-    return "Bosan eh 😂 Kita boleh buat kuiz, cipta cerita, test MoonBot atau fikir idea baru.";
+    return "Hehe aku cuba jadi lebih pandai 😎 Tapi aku masih chatbot JavaScript tanpa API.";
 
   }
 
 
   /* FALLBACK */
 
-  return `Aku faham mesej kau:
+  return `🌙 MoonBot faham mesej kau:
 
 "${original}"
 
-🌙 Tapi aku belum mempunyai jawapan khusus untuk soalan itu.
+Tapi database V5 belum mempunyai jawapan khusus untuk soalan itu.
 
-Cuba tanya dengan cara lain atau gunakan contoh seperti:
+Cuba tanya contoh:
 
-• "Siapa pencipta MoonBot?"
-• "Berapakah 25 + 75?"
-• "Mata wang Vietnam apa?"
-• "Apa fungsi HTML?"
-• "Terangkan fotosintesis"
-• "Berapakah negeri Malaysia?"
+• Siapa pencipta MoonBot?
+• Ceritakan sejarah MoonBot
+• Siapa Nazreel?
+• Berapa negeri Malaysia?
+• Apa itu fotosintesis?
+• Apa itu HTML?
+• Berapa 25 + 75?
+• 5 km ke m
+• Pukul berapa?
+• Apa fungsi MoonBot?
 
-MoonBot V5 ini berjalan sepenuhnya tanpa API.`;
+💡 Versi ini berjalan tanpa API, jadi pengetahuan MoonBot bergantung pada database JavaScript yang dibina dalam kod.`;
 
 }
 
 
-/* =========================================
-   CREATOR WINDOW
-========================================= */
+/* =========================
+   RANDOM
+========================= */
+
+function random(array){
+
+  return array[
+    Math.floor(Math.random()*array.length)
+  ];
+
+}
+
+
+/* =========================
+   CREATOR BUTTON
+========================= */
 
 function showCreator(){
 
   addMessage(
     "bot",
-    `👤 CREATOR MOONBOT
+`👤 MOONBOT CREATOR
 
 Nama: Nazreel
-Project: MoonBot
-Version: V5
-Year Started: 2026
-Assisted by: ChatGPT
+Projek: MoonBot
+Versi: V5 Ultimate
+Tahun mula: 2026
+Teknologi: HTML + CSS + JavaScript
+Dibantu oleh: ChatGPT
+
+🌙 Nazreel ialah pencipta projek MoonBot.
+
+"Satu idea pada waktu malam menjadi permulaan kepada sebuah projek."`
+  );
+
+}
+
+
+/* =========================
+   HISTORY BUTTON
+========================= */
+
+function showMoonHistory(){
+
+  addMessage(
+    "bot",
+`📖 SEJARAH MOONBOT
+
+🌙 2026
+
+Nazreel mendapat idea untuk membina chatbot sendiri.
+
+Dengan bantuan ChatGPT, proses pembelajaran HTML, CSS dan JavaScript bermula.
+
+Daripada eksperimen kecil, lahirlah MoonBot.
+
+Projek kemudian berkembang melalui beberapa versi.
+
+MoonBot V5 direka dengan visi yang lebih besar:
+
+🧠 Brain
+💬 Conversation
+💾 Memory
+🎙️ Voice
+💻 Coding
+🧰 Tools
+🎨 Futuristic UI
+
+Versi Ultimate ini menggunakan satu fail index.html dan tidak memerlukan API.
 
 🌙 "Satu idea pada waktu malam menjadi permulaan kepada sebuah projek."`
   );
@@ -1520,25 +1850,57 @@ Assisted by: ChatGPT
 }
 
 
-/* =========================================
-   HISTORY WINDOW
-========================================= */
+/* =========================
+   CAPABILITIES BUTTON
+========================= */
 
-function showHistory(){
+function showCapabilities(){
 
   addMessage(
     "bot",
-    `📖 MOONBOT HISTORY
+`🧠 MOONBOT V5 ULTIMATE
 
-Pada suatu malam pada tahun 2026, Nazreel mendapat idea untuk mencipta sebuah chatbot AI sendiri.
+CORE
+• Smart rule-based brain
+• Knowledge database
+• BM + English
+• Slang ringan
+• Chat history
 
-Daripada HTML dan JavaScript, idea kecil itu berkembang menjadi MoonBot.
+TOOLS
+• Calculator
+• Unit converter
+• Date
+• Time
 
-MoonBot terus berkembang melalui beberapa versi.
+STUDY
+• Bahasa Melayu
+• Sains
+• Sejarah
+• Geografi
+• Pengetahuan am
+• Matematik asas
 
-Sekarang MoonBot V5 menjadi eksperimen untuk menghasilkan chatbot yang mempunyai personality, tools, memory dan interface futuristik.
+TECH
+• HTML
+• CSS
+• JavaScript
 
-Versi ini tidak menggunakan API.`
+UI
+• Dark mode
+• Light mode
+• Responsive
+• Futuristic interface
+
+VOICE
+• Browser speech recognition
+
+PROJECT
+Creator: Nazreel
+Year: 2026
+Assisted by: ChatGPT
+
+API: ❌ Tidak digunakan`
   );
 
 }
